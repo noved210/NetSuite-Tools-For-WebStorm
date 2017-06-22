@@ -149,20 +149,16 @@ public class FolderSelectionUI extends JDialog {
             String folderName = folder.getFolder().getName();
 
             if (folderName != null) {
-                if (
-                        folderName.equals(FILE_CABINET_SUITESCRIPTS) ||
-                        folderName.equals(FILE_CABINET_SUITEBUNDLES) ||
-                        folderName.equals(FILE_CABINET_ROOT)
-                        ) {
-                    nsRootFolderId = "";
-                } else{
-                    nsRootFolderId = folder.getFolder().getInternalId();
-                }
+                nsRootFolderId = folderName.equals(FILE_CABINET_SUITESCRIPTS) ? SUITESCRIPTS_FOLDER_INTERNAL_ID :
+                                (folderName.equals(FILE_CABINET_SUITEBUNDLES) ? SUITEBUNDLES_FOLDER_INTERNAL_ID :
+                                (folderName.equals(FILE_CABINET_ROOT) ? "" :
+                                 folder.getFolder().getInternalId()));
+            } else{
+                nsRootFolderId = "";
             }
         } else {
             nsRootFolderId = rootFolderIdTextField.getText().trim();
         }
-
         saveProjectSettings(nsRootFolderId);
         JBPopupFactory.getInstance()
                 .createHtmlTextBalloonBuilder("<h3>NetSuite Project Settings Updated!</h3>", MessageType.INFO, null)

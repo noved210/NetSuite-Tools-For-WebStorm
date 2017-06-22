@@ -90,11 +90,8 @@ public class CompareWithFileCabinetTask implements Runnable {
 
                 for (int i = 0; i < foldersAndFile.length; i++) {
                     if ((i + 1) != foldersAndFile.length) {
-                        if(isNSSDFProject && foldersAndFile[i].equals("FileCabinet")){ //Ignore FileCabinet if is an SDF Project
+                        if(isNSSDFProject && foldersAndFile[i].toLowerCase().equals("filecabinet")){ //Ignore FileCabinet if is an SDF Project
                             continue;
-                        }
-                        if(foldersAndFile[i].toLowerCase().equals("suitescripts")){ //Set Parent Folder to null
-                            currentParentFolder = null;
                         }
                         try {
                             String folderId = nsClient.searchFolder(foldersAndFile[i], currentParentFolder);
