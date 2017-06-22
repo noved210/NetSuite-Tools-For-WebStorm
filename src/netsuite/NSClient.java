@@ -241,22 +241,24 @@ public class NSClient	{
             return null;
         }
 
-        RecordRef parentFolderRef = new RecordRef();
-        parentFolderRef.setInternalId(parentFolderId);
-
-        RecordRef[] rr = new RecordRef[1];
-        rr[0] = parentFolderRef;
-
-        SearchMultiSelectField smsf = new SearchMultiSelectField();
-        smsf.setSearchValue(rr);
-        smsf.setOperator(SearchMultiSelectFieldOperator.anyOf);
-
         FolderSearchBasic subDirectoryFolderSearch = new FolderSearchBasic();
         SearchStringField nameField = new SearchStringField();
         nameField.setSearchValue(folder);
         nameField.setOperator(SearchStringFieldOperator.is);
         subDirectoryFolderSearch.setName(nameField);
-        subDirectoryFolderSearch.setParent(smsf);
+
+        if(parentFolderId != null && !parentFolderId.isEmpty()){
+            RecordRef parentFolderRef = new RecordRef();
+            parentFolderRef.setInternalId(parentFolderId);
+
+            RecordRef[] rr = new RecordRef[1];
+            rr[0] = parentFolderRef;
+
+            SearchMultiSelectField smsf = new SearchMultiSelectField();
+            smsf.setSearchValue(rr);
+            smsf.setOperator(SearchMultiSelectFieldOperator.anyOf);
+            subDirectoryFolderSearch.setParent(smsf);
+        }
 
         SearchResult results = _port.search(subDirectoryFolderSearch);
 
@@ -287,11 +289,12 @@ public class NSClient	{
             return null;
         }
 
-        RecordRef parentFolderRef = new RecordRef();
-        parentFolderRef.setInternalId(parentFolderId);
-
         Folder myFolder = new Folder();
-        myFolder.setParent(parentFolderRef);
+        if(parentFolderId != null && !parentFolderId.isEmpty()){
+            RecordRef parentFolderRef = new RecordRef();
+            parentFolderRef.setInternalId(parentFolderId);
+            myFolder.setParent(parentFolderRef);
+        }
         myFolder.setName(folder);
 
         WriteResponse response = null;

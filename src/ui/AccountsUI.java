@@ -20,13 +20,15 @@ public class AccountsUI extends JDialog {
     private ArrayList<NSAccount> nsAccounts;
     private Project project;
     private String nsEnvironment;
+    private Boolean nsIsSDFProject;
 
-    public AccountsUI(String nsEmail, String nsPassword, String nsEnvironment, Project project) {
+    public AccountsUI(String nsEmail, String nsPassword, String nsEnvironment, Boolean nsIsSDFProject, Project project) {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(nextButton);
 
         this.nsEnvironment = nsEnvironment;
+        this.nsIsSDFProject = nsIsSDFProject;
         this.project = project;
 
         NSRolesRestServiceController nsRolesRestServiceController = new NSRolesRestServiceController();
@@ -121,7 +123,7 @@ public class AccountsUI extends JDialog {
             }
 
             this.setVisible(false);
-            FolderSelectionUI folderSelectionUI = new FolderSelectionUI(nsClient, this.project, this.nsEnvironment);
+            FolderSelectionUI folderSelectionUI = new FolderSelectionUI(nsClient, this.project, this.nsEnvironment, this.nsIsSDFProject);
             folderSelectionUI.pack();
             folderSelectionUI.setLocationRelativeTo(null);
             folderSelectionUI.setVisible(true);

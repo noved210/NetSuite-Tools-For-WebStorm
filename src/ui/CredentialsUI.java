@@ -18,6 +18,8 @@ public class CredentialsUI extends JDialog {
     private JLabel passwordLabel;
     private JComboBox environmentComboBox;
     private JLabel environmentLabel;
+    private JCheckBox isSDFProjectCheckbox;
+    private JLabel isSDFProjectLabel;
     private Project project;
 
     public CredentialsUI(Project project) {
@@ -35,6 +37,7 @@ public class CredentialsUI extends JDialog {
                 emailField.setText(projectSettingsController.getNsEmail());
                 passwordField.setText(nsPassword);
                 environmentComboBox.setSelectedItem(projectSettingsController.getNsEnvironment());
+                isSDFProjectCheckbox.setSelected(projectSettingsController.getNsIsSDFProject());
             }
         }
 
@@ -71,7 +74,12 @@ public class CredentialsUI extends JDialog {
         }
 
         this.setVisible(false);
-        AccountsUI accountsUI = new AccountsUI(emailField.getText(), String.valueOf(passwordField.getPassword()), environmentComboBox.getSelectedItem().toString(), this.project);
+        AccountsUI accountsUI = new AccountsUI(
+                emailField.getText(),
+                String.valueOf(passwordField.getPassword()),
+                environmentComboBox.getSelectedItem().toString(),
+                isSDFProjectCheckbox.isSelected(),
+                this.project);
 
         if (accountsUI.getNsAccounts() != null) {
             accountsUI.pack();

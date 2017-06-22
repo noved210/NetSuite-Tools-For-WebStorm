@@ -16,6 +16,8 @@ public class ProjectSettingsUI extends JDialog {
     private JTextField nsAccountIdField;
     private JLabel nsEnvironmentLabel;
     private JTextField nsEnvironmentField;
+    private JLabel nsIsSDFProjectLabel;
+    private JCheckBox nsIsSDFProjectField;
     private JLabel nsAccountEmailLabel;
     private JTextField nsAccountEmailField;
     private JLabel nsAccountRoleLabel;
@@ -75,6 +77,7 @@ public class ProjectSettingsUI extends JDialog {
         this.nsAccountNameField.setText(projectSettingsController.getNsAccountName());
         this.nsAccountIdField.setText(projectSettingsController.getNsAccount());
         this.nsEnvironmentField.setText(projectSettingsController.getNsEnvironment());
+        this.nsIsSDFProjectField.setSelected(projectSettingsController.getNsIsSDFProject());
         this.nsAccountEmailField.setText(projectSettingsController.getNsEmail());
         this.nsAccountRoleField.setText(projectSettingsController.getNsAccountRole());
         this.nsRootFolderField.setText(projectSettingsController.getNsRootFolder());

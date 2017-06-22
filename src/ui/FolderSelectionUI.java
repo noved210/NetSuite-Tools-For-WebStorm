@@ -30,6 +30,8 @@ public class FolderSelectionUI extends JDialog {
     private NSClient   nsClient;
     private Project    project;
     private String     nsEnvironment;
+    private Boolean    getNsIsSDFProject;
+    private Boolean    nsIsSDFProject;
 
     final private String SUITESCRIPTS_FOLDER_INTERNAL_ID = "-15";
     final private String SUITEBUNDLES_FOLDER_INTERNAL_ID = "-16";
@@ -37,7 +39,7 @@ public class FolderSelectionUI extends JDialog {
     final private String FILE_CABINET_SUITESCRIPTS       = "SuiteScripts";
     final private String FILE_CABINET_SUITEBUNDLES       = "SuiteBundles";
 
-    public FolderSelectionUI(NSClient nsClient, Project project, String selectedEnvironment) {
+    public FolderSelectionUI(NSClient nsClient, Project project, String selectedEnvironment, Boolean nsIsSDFProject) {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(selectAndCloseButton);
@@ -45,6 +47,7 @@ public class FolderSelectionUI extends JDialog {
         this.nsClient      = nsClient;
         this.project       = project;
         this.nsEnvironment = selectedEnvironment;
+        this.nsIsSDFProject = nsIsSDFProject;
 
         initializeFolderSelectionUI();
 
@@ -139,27 +142,25 @@ public class FolderSelectionUI extends JDialog {
 
         TreePath selectedFilePath = nsFolderTree.getSelectionPath();
 
+
         if (selectedFilePath!= null && rootFolderIdTextField.getText().isEmpty()) {
             DefaultMutableTreeNode node = (DefaultMutableTreeNode)nsFolderTree.getSelectionPath().getLastPathComponent();
             FileTreeFolder folder = (FileTreeFolder)node.getUserObject();
             String folderName = folder.getFolder().getName();
 
             if (folderName != null) {
-                if (folderName.equals(FILE_CABINET_SUITESCRIPTS) ||
+                if (
+                        folderName.equals(FILE_CABINET_SUITESCRIPTS) ||
                         folderName.equals(FILE_CABINET_SUITEBUNDLES) ||
-                        folderName.equals(FILE_CABINET_ROOT)) {
-                    JOptionPane.showMessageDialog(null, "Cannot set directory to " + folderName + ".\nPlease select another directory.",  "ERROR", JOptionPane.ERROR_MESSAGE);
-                    return;
+                        folderName.equals(FILE_CABINET_ROOT)
+                        ) {
+                    nsRootFolderId = "";
+                } else{
+                    nsRootFolderId = folder.getFolder().getInternalId();
                 }
-                nsRootFolderId = folder.getFolder().getInternalId();
             }
         } else {
             nsRootFolderId = rootFolderIdTextField.getText().trim();
-        }
-
-        if (nsRootFolderId.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Folder must be selected or Folder ID specified",  "ERROR", JOptionPane.ERROR_MESSAGE);
-            return;
         }
 
         saveProjectSettings(nsRootFolderId);

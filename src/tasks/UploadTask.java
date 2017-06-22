@@ -78,6 +78,7 @@ public class UploadTask implements Runnable {
                     progessIndicator.setText("Uploading File: " + file.getName());
                     try {
                         WriteResponse response = nsClient.uploadFile(file.getName(), file.getPath(), nsClient.searchFile(file.getName(), fileNetSuiteParentFolderId, projectSettingsController.getNsRootFolder()), fileNetSuiteParentFolderId, "");
+
                         if (!response.getStatus().isIsSuccess()) {
                             displayUploadResultBalloonMessage(file.getName(), false);
                             JOptionPane.showMessageDialog(null, "File: " + file.getName() + "\n" +
@@ -98,7 +99,10 @@ public class UploadTask implements Runnable {
     }
 
     private String getFileNetSuiteParentFolderId(VirtualFile file, String projectRootDirectory) {
+        Boolean isNSSDFProject = projectSettingsController.getNsIsSDFProject();
+
         String projectFilePathFromRootDirectory = projectHelper.getProjectFilePathFromRootDirectory(file, projectRootDirectory);
+
 
         if (projectFilePathFromRootDirectory == null) {
             return null;
@@ -109,6 +113,12 @@ public class UploadTask implements Runnable {
 
         for (int i = 0; i < foldersAndFile.length; i++) {
             if (i + 1 != foldersAndFile.length) {
+                if(isNSSDFProject && foldersAndFile[i].equals("FileCabinet")){ //Ignore FileCabinet if is an SDF Project
+                    continue;
+                }
+                if(foldersAndFile[i].toLowerCase().equals("suitescripts")){ //Set Parent Folder to null
+                    currentParentFolder = null;
+                }
                 try {
                     String folderId = nsClient.searchFolder(foldersAndFile[i], currentParentFolder);
 

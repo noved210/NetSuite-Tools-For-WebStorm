@@ -20,6 +20,7 @@ public class ProjectSettingsController {
     final private String PROJECT_SETTING_NETSUITE_ACCOUNT_NAME = "nsAccountName";
     final private String PROJECT_SETTING_NETSUITE_ACCOUNT_ROLE = "nsAccountRole";
     final private String PROJECT_SETTING_NETSUITE_ENVIRONMENT  = "nsEnvironment";
+    final private String PROJECT_SETTING_NETSUITE_IS_SDF       = "nsIsSDFProject";
 
     private final PropertiesComponent propertiesComponent;
 
@@ -87,6 +88,19 @@ public class ProjectSettingsController {
         }
     }
 
+    public Boolean getNsIsSDFProject() {
+        Boolean isNSSDFProject = propertiesComponent.getBoolean(PROJECT_SETTING_NETSUITE_IS_SDF);
+        isNSSDFProject = isNSSDFProject == null ? false : true;
+        return isNSSDFProject;
+    }
+
+    public void setNsIsSDFProject(Boolean nsIsSDFProject) {
+        if(nsIsSDFProject == null){
+            nsIsSDFProject = false;
+        }
+        propertiesComponent.setValue(PROJECT_SETTING_NETSUITE_IS_SDF, nsIsSDFProject);
+    }
+
     public void saveProjectPassword(NSClient client) {
         if (client != null) {
             CredentialAttributes attributes = new CredentialAttributes(client.getNSAccount().getAccountName() + ":" + client.getNSAccount().getAccountId(), client.getNSAccount().getAccountEmail(), this.getClass(), false);
@@ -102,9 +116,9 @@ public class ProjectSettingsController {
 
     public boolean hasAllProjectSettings() {
         return (getNsEmail()       != null && !getNsEmail().isEmpty()      &&
-                getNsRootFolder()  != null && !getNsRootFolder().isEmpty() &&
                 getNsAccount()     != null && !getNsAccount().isEmpty()    &&
-                getNsEnvironment() != null && !getNsEnvironment().isEmpty());
+                getNsEnvironment() != null && !getNsEnvironment().isEmpty()) &&
+                getNsIsSDFProject() != null;
     }
 
     public NSAccount getNSAccountForProject() {
