@@ -102,9 +102,7 @@ public class ProjectSettingsController {
     }
 
     public Boolean getNsIsSDFProject() {
-        Boolean isNSSDFProject = propertiesComponent.getBoolean(PROJECT_SETTING_NETSUITE_IS_SDF);
-        isNSSDFProject = isNSSDFProject == null ? false : true;
-        return isNSSDFProject;
+        return propertiesComponent.getBoolean(PROJECT_SETTING_NETSUITE_IS_SDF);
     }
 
     public void setNsIsSDFProject(Boolean nsIsSDFProject) {

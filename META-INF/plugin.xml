@@ -62,6 +62,8 @@
               text="Mark As Base Folder" description="Mark this folder as the Base Folder."/>
       <action id="com.netsuitetools.recordsbrowser" class="actions.RecordsBrowserAction"
               text="2016.2 Records Browser" description="2016.2 Records Browser"/>
+      <group id="com.action.sdfapplication" class="actions.ShowSDFAppAction" text="SDF Application Tools" description="Tools For SDF Application" popup="true">
+      </group>
     </group>
   </actions>
 </idea-plugin>
