@@ -130,6 +130,7 @@ public class FolderSelectionUI extends JDialog {
         ProjectSettingsController nsProjectSettingsController = new ProjectSettingsController(this.project);
         nsProjectSettingsController.setNsEmail(this.nsClient.getNSAccount().getAccountEmail());
         nsProjectSettingsController.setNsRootFolder(nsRootFolderId);
+        nsProjectSettingsController.setNsBaseFolder("");
         nsProjectSettingsController.setNsAccount(this.nsClient.getNSAccount().getAccountId());
         nsProjectSettingsController.setNsAccountName(this.nsClient.getNSAccount().getAccountName());
         nsProjectSettingsController.setNsAccountRole(this.nsClient.getNSAccount().getRoleId());

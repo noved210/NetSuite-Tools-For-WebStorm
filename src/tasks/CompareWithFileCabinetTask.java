@@ -72,7 +72,7 @@ public class CompareWithFileCabinetTask implements Runnable {
         if (files == null || files.length == 0) {
             return null;
         }
-        Boolean isNSSDFProject = projectSettingsController.getNsIsSDFProject();
+        String baseFolder = projectSettingsController.getNsBaseFolder();
         ArrayList<String> fileIds = new ArrayList<String>();
 
         for (VirtualFile file : files) {
@@ -87,10 +87,15 @@ public class CompareWithFileCabinetTask implements Runnable {
 
                 String[] foldersAndFile = projectFilePathFromRootDirectory.split("/");
                 String currentParentFolder =  projectSettingsController.getNsRootFolder();
+                boolean foundBaseFolder = false;
 
                 for (int i = 0; i < foldersAndFile.length; i++) {
                     if ((i + 1) != foldersAndFile.length) {
-                        if(isNSSDFProject && foldersAndFile[i].toLowerCase().equals("filecabinet")){ //Ignore FileCabinet if is an SDF Project
+                        if(!foundBaseFolder && baseFolder != null && !baseFolder.isEmpty() && !foldersAndFile[i].equals(baseFolder)){
+                            continue;
+                        }
+                        else if(foldersAndFile[i].equals(baseFolder)){
+                            foundBaseFolder = true;
                             continue;
                         }
                         try {
@@ -172,7 +177,6 @@ public class CompareWithFileCabinetTask implements Runnable {
         final DiffContent localFileContent = DiffContentFactory.getInstance().create(project, localFile);
 
         DiffRequest dr = new SimpleDiffRequest("NetSuite File Cabinet Compare", remoteFileContent, localFileContent, "NetSuite File Cabinet - " + remoteFile.getName(), "Local File - " + localFile.getName());
-
         ApplicationManager.getApplication().invokeLater(new Runnable() {
             @Override
             public void run() {

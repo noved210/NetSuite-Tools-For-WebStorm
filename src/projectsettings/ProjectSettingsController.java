@@ -14,13 +14,14 @@ import java.util.ArrayList;
 
 public class ProjectSettingsController {
 
-    final private String PROJECT_SETTING_NETSUITE_EMAIL        = "nsProjectEmail";
-    final private String PROJECT_SETTING_NETSUITE_ROOT_FOLDER  = "nsProjectRootFolder";
-    final private String PROJECT_SETTING_NETSUITE_ACCOUNT      = "nsAccount";
-    final private String PROJECT_SETTING_NETSUITE_ACCOUNT_NAME = "nsAccountName";
-    final private String PROJECT_SETTING_NETSUITE_ACCOUNT_ROLE = "nsAccountRole";
-    final private String PROJECT_SETTING_NETSUITE_ENVIRONMENT  = "nsEnvironment";
-    final private String PROJECT_SETTING_NETSUITE_IS_SDF       = "nsIsSDFProject";
+    final private String PROJECT_SETTING_NETSUITE_EMAIL          = "nsProjectEmail";
+    final private String PROJECT_SETTING_NETSUITE_BASE_FOLDER    = "nsProjectBaseFolder";
+    final private String PROJECT_SETTING_NETSUITE_ROOT_FOLDER    = "nsProjectRootFolder";
+    final private String PROJECT_SETTING_NETSUITE_ACCOUNT        = "nsAccount";
+    final private String PROJECT_SETTING_NETSUITE_ACCOUNT_NAME   = "nsAccountName";
+    final private String PROJECT_SETTING_NETSUITE_ACCOUNT_ROLE   = "nsAccountRole";
+    final private String PROJECT_SETTING_NETSUITE_ENVIRONMENT    = "nsEnvironment";
+    final private String PROJECT_SETTING_NETSUITE_IS_SDF         = "nsIsSDFProject";
 
     private final PropertiesComponent propertiesComponent;
 
@@ -36,6 +37,17 @@ public class ProjectSettingsController {
         if (nsEmail != null && !nsEmail.isEmpty()) {
             propertiesComponent.setValue(PROJECT_SETTING_NETSUITE_EMAIL, nsEmail);
         }
+    }
+
+    public String getNsBaseFolder() {
+        return propertiesComponent.getValue(PROJECT_SETTING_NETSUITE_BASE_FOLDER);
+    }
+
+    public void setNsBaseFolder(String nsBaseFolder) {
+        if (nsBaseFolder == null) {
+            nsBaseFolder = "";
+        }
+        propertiesComponent.setValue(PROJECT_SETTING_NETSUITE_BASE_FOLDER, nsBaseFolder);
     }
 
     public String getNsRootFolder() {

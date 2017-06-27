@@ -99,7 +99,7 @@ public class UploadTask implements Runnable {
     }
 
     private String getFileNetSuiteParentFolderId(VirtualFile file, String projectRootDirectory) {
-        Boolean isNSSDFProject = projectSettingsController.getNsIsSDFProject();
+        String baseFolder = projectSettingsController.getNsBaseFolder();
 
         String projectFilePathFromRootDirectory = projectHelper.getProjectFilePathFromRootDirectory(file, projectRootDirectory);
 
@@ -110,10 +110,14 @@ public class UploadTask implements Runnable {
 
         String[] foldersAndFile = projectFilePathFromRootDirectory.split("/");
         String currentParentFolder =  projectSettingsController.getNsRootFolder();
-
+        boolean foundBaseFolder = false;
         for (int i = 0; i < foldersAndFile.length; i++) {
             if (i + 1 != foldersAndFile.length) {
-                if(isNSSDFProject && foldersAndFile[i].toLowerCase().equals("filecabinet")){ //Ignore FileCabinet if is an SDF Project
+                if(!foundBaseFolder && baseFolder != null && !baseFolder.isEmpty() && !foldersAndFile[i].equals(baseFolder)){
+                    continue;
+                }
+                else if(foldersAndFile[i].equals(baseFolder)){
+                    foundBaseFolder = true;
                     continue;
                 }
                 try {

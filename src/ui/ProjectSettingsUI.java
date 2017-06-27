@@ -24,6 +24,8 @@ public class ProjectSettingsUI extends JDialog {
     private JTextField nsAccountRoleField;
     private JLabel nsRootFolderLabel;
     private JTextField nsRootFolderField;
+    private JLabel nsBaseFolderLabel;
+    private JTextField nsBaseFolderField;
 
     private JPanel contentPane;
 
@@ -81,5 +83,6 @@ public class ProjectSettingsUI extends JDialog {
         this.nsAccountEmailField.setText(projectSettingsController.getNsEmail());
         this.nsAccountRoleField.setText(projectSettingsController.getNsAccountRole());
         this.nsRootFolderField.setText(projectSettingsController.getNsRootFolder());
+        this.nsBaseFolderField.setText(projectSettingsController.getNsBaseFolder());
     }
 }

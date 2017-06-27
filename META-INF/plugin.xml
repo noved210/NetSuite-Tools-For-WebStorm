@@ -58,6 +58,8 @@
               text="Upload Selected File(s)" description="Upload Selected File(s) to NetSuite File Cabinet"/>
       <action id="com.action.netsuitetools.comparewithfilecabinet" class="actions.CompareWithFileCabinetAction"
               text="Compare With File Cabinet" description="Compare Selected File(s) with File Cabinet"/>
+      <action id="com.action.netsuitetools.basefolder" class="actions.SetBaseFolderAction"
+              text="Mark As Base Folder" description="Mark this folder as the Base Folder."/>
       <action id="com.netsuitetools.recordsbrowser" class="actions.RecordsBrowserAction"
               text="2016.2 Records Browser" description="2016.2 Records Browser"/>
     </group>
